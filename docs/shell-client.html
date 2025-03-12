@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ioChem-BD Shell Client Setup Guide</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #f39c12;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-color), #ffffff);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+            color: white;
+            padding: 2rem 0;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .platform-card {
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            font-weight: bold;
+            font-size: 1.5rem;
+            padding: 1.5rem;
+        }
+        
+        .linux-header {
+            background: linear-gradient(135deg, #f5af19, #f12711);
+            color: white;
+        }
+        
+        .mac-header {
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
+            color: white;
+        }
+        
+        .windows-header {
+            background: linear-gradient(135deg, #373B44, #4286f4);
+            color: white;
+        }
+        
+        .platform-icon {
+            font-size: 3rem;
+            margin-right: 1rem;
+        }
+        
+        .step {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .note {
+            background-color: rgba(243, 156, 18, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        
+        code {
+            background-color: var(--light-color);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: var(--dark-color);
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .command-block {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            font-family: 'Courier New', Courier, monospace;
+            position: relative;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            border-radius: 4px;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background-color: rgba(255,255,255,0.3);
+        }
+        
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        @media (max-width: 768px) {
+            .platform-card {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">
+                <svg style="margin-right: 10px; vertical-align: top;" version="1.1" width="65" height="85.585068" id="svg1" sodipodi:docname="iochembd_logo_atom(3).svg" inkscape:export-filename="iochembd_logo_atom_final.svg" inkscape:export-xdpi="20.799999" inkscape:export-ydpi="20.799999" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+                <defs id="defs1"></defs>
+                <sodipodi:namedview id="namedview1" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1"></sodipodi:namedview>
+                <g id="g1" transform="translate(-0.1353741,-0.16391169)">
+                  <path style="opacity:0.969;stroke-width:0.239226" fill="#000000" d="m 56.353358,0.2023236 c 4.534998,-0.3461661 7.445414,1.647391 8.73173,5.980637 0.43874,5.3419774 -1.993466,8.3721594 -7.296376,9.0905804 -0.870781,-0.244079 -1.747781,-0.363696 -2.631481,-0.358849 -3.554412,4.471183 -7.062893,8.976704 -10.525921,13.516237 3.390065,3.910618 4.386917,8.376009 2.990319,13.396638 -0.541368,1.521707 -1.298755,2.917113 -2.272642,4.18644 1.486785,1.725778 2.882427,3.519957 4.186446,5.382572 4.611549,-1.321952 7.881043,0.193294 9.808244,4.54529 1.051635,4.841685 -0.742556,8.071228 -5.382574,9.688629 -4.471124,0.617194 -7.461441,-1.176985 -8.970955,-5.382571 -0.343526,-2.09011 -0.06434,-4.083581 0.83729,-5.980637 -1.34995,-1.788697 -2.745352,-3.543176 -4.186446,-5.262955 -6.422247,3.17379 -12.083996,2.137234 -16.985008,-3.109944 -0.493282,-0.574383 -0.892071,-1.212149 -1.196128,-1.913796 -2.789416,1.155692 -5.620242,2.192265 -8.492503,3.109927 -0.295803,3.84268 -2.289363,6.274883 -5.980636,7.296384 -5.2166712,0.325818 -8.1671347,-2.106144 -8.8513429,-7.296384 0.4748621,-4.46204 2.946875,-6.933943 7.4159888,-7.415984 1.1437371,0.157942 2.2601081,0.437064 3.3491581,0.837281 0.986972,0.588974 1.903994,1.266698 2.751092,2.033412 2.750518,-0.98321 5.50161,-1.940107 8.253279,-2.870693 -0.560052,-5.710555 1.513339,-10.136228 6.219861,-13.277021 0.133726,-0.173444 0.21339,-0.372702 0.239226,-0.598066 -0.767914,-2.462347 -1.485591,-4.934284 -2.15303,-7.415983 -5.515726,-0.654763 -7.947858,-3.76469 -7.296376,-9.329797 1.268805,-4.0437773 4.019945,-5.9177007 8.253279,-5.6218045 4.152236,0.7238347 6.384927,3.1958235 6.698312,7.4160005 -0.113155,2.57851 -1.149718,4.691666 -3.10993,6.33947 0.781311,2.383617 1.538698,4.775878 2.272642,7.176768 2.607318,-0.197849 5.159136,0.200942 7.655215,1.19613 3.770192,-4.468828 7.398526,-9.053991 10.884758,-13.75547 C 50.664097,10.56438 50.265309,9.168888 50.372721,7.6183245 50.526538,3.6391331 52.52001,1.1671271 56.353358,0.2023236 Z" id="path1"></path>
+                  <path style="fill:#ffffff;stroke-width:0.398639" d="m 49.443152,64.944957 c -1.821938,-0.790255 -2.725773,-1.643686 -3.642034,-3.438939 -0.8625,-1.689921 -0.944743,-3.194115 -0.312019,-5.706879 l 0.442837,-1.758673 -2.071722,-2.603567 c -1.139447,-1.43196 -2.101121,-2.603474 -2.137054,-2.603366 -0.03594,1.11e-4 -1.009048,0.358887 -2.162471,0.797279 -2.531783,0.962279 -6.457841,1.048573 -8.876816,0.19511 -2.166858,-0.764511 -5.389323,-3.205245 -6.41277,-4.857107 l -0.788939,-1.273358 -1.675436,0.713644 c -0.921489,0.392504 -2.872214,1.109996 -4.334943,1.594422 -2.621491,0.868189 -2.663523,0.904681 -2.940427,2.552911 -0.34699,2.065411 -2.886018,4.779544 -5.0232242,5.369658 -1.8192262,0.50231 -4.78082,-0.01107 -6.2986287,-1.091846 C 0.92919433,51.21052 -0.09872739,47.460212 0.9697197,44.66252 2.7021357,40.126254 7.8577043,38.681535 12.020988,41.565678 l 1.713973,1.187367 4.044387,-1.429577 4.044387,-1.429573 0.228195,-2.721914 c 0.305467,-3.643607 1.703172,-6.579786 4.336967,-9.110725 1.228117,-1.180158 2.059837,-2.306633 1.984978,-2.688443 -0.07087,-0.361442 -0.575038,-2.137116 -1.120382,-3.945942 -0.731212,-2.425322 -1.168359,-3.289798 -1.665032,-3.29267 -0.370422,-0.0021 -1.604993,-0.437592 -2.743491,-0.967667 -2.802207,-1.304686 -3.861679,-3.291653 -3.636956,-6.820864 0.272081,-4.2729612 2.787776,-6.5657445 7.189046,-6.5520376 2.68726,0.00837 4.956646,1.2492628 6.19975,3.3900029 1.382531,2.3808474 1.116031,5.8993837 -0.634986,8.3835707 l -1.287585,1.826711 1.068756,3.561205 1.068755,3.561205 h 1.859186 c 1.022553,0 2.812965,0.283241 3.978694,0.629425 1.759252,0.522442 2.20155,0.539381 2.602191,0.09966 0.699369,-0.767587 6.502798,-8.083911 8.691759,-10.957616 1.815607,-2.383554 1.852868,-2.488051 1.27931,-3.587755 -0.324923,-0.622982 -0.587934,-1.939939 -0.584469,-2.9265716 0.0148,-4.2163558 3.05815,-7.4196414 6.95985,-7.32561938 5.492889,0.13236608 8.86844,5.40499758 6.624008,10.34674798 -1.278078,2.814049 -4.087776,4.356706 -7.448243,4.089438 l -1.780918,-0.141643 -5.242164,6.746237 -5.242165,6.746236 0.737359,1.230186 c 2.231082,3.72226 2.391267,4.287747 2.391267,8.441607 0,3.823485 -0.06242,4.122688 -1.262866,6.053112 l -1.262862,2.030809 2.14421,2.759597 2.144214,2.759594 1.98717,-0.190941 c 1.092946,-0.105017 2.442077,-0.07677 2.998075,0.06278 1.28403,0.322272 3.682201,2.414882 4.434326,3.869334 0.679063,1.313162 0.755338,4.223282 0.152404,5.814603 -1.35834,3.585045 -5.923057,5.44343 -9.528934,3.879412 z" id="path2"></path>
+                </g>
+              </svg>
+              <span style="font-family: 'Montserrat', sans-serif; font-weight: 600;">ioChem-BD</span> - Shell Client</h1>
+            <p class="lead">Setup Guide for Linux, macOS, and Windows</p>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading"><i class="bi bi-info-circle-fill"></i> About the Shell Client</h4>
+                    <p>The ioChem-BD Shell Client allows you to interact with the ioChem-BD platform from the command line, 
+                    enabling efficient management of computational chemistry data and workflows.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Linux Setup -->
+            <div class="col-md-4">
+                <div class="platform-card card">
+                    <div class="card-header linux-header d-flex align-items-center">
+                        <i class="bi bi-ubuntu platform-icon"></i>
+                        <span>Linux</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <strong>Download the Shell Client</strong>
+                            <p>Download the latest version of the ioChem-BD Shell Client from the Create module.</p>
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#downloadModal">Download Shell Client</a>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <strong>Extract the Archive</strong>
+                            <p>Extract the downloaded archive to your preferred location:</p>
+                            <div class="command-block">
+                                unzip shell.zip
+                                <button class="copy-btn">Copy</button>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <strong>Run the Shell Client</strong>
+                            <p>Navigate to the extracted directory and run the client:</p>
+                            <div class="command-block">
+                                cd shell<br>
+                                . ./start-rep-shell
+                                <button class="copy-btn">Copy</button>
+                            </div>
+                        </div>
+                        
+                        <div class="note">
+                            <strong>Note:</strong> The Linux version comes pre-configured and ready to use. No additional setup is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- macOS Setup -->
+            <div class="col-md-4">
+                <div class="platform-card card">
+                    <div class="card-header mac-header d-flex align-items-center">
+                        <i class="bi bi-apple platform-icon"></i>
+                        <span>macOS</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <strong>Download the Shell Client</strong>
+                            <p>Download the latest version of the ioChem-BD Shell Client from the Create module.</p>
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#downloadModal">Download Shell Client</a>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <strong>Check Your Architecture</strong>
+                            <p>Determine if your Mac uses Intel (x64) or Apple Silicon (ARM64):</p>
+                            <div class="command-block">
+                                uname -m
+                                <button class="copy-btn">Copy</button>
+                            </div>
+                            <p class="mt-2">Output will be <code>x86_64</code> for Intel or <code>arm64</code> for Apple Silicon.</p>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <strong>Download Compatible JRE</strong>
+                            <p>Download the <b>JRE 17 - LTS</b> appropriate for your Mac's architecture (<code>aarch64</code> or <code>x64</code>).</p>
+                            <p>Pick the <b>.pkg</b> version and install it globally on your machine.</p>
+                            <a href="https://adoptium.net/es/temurin/releases/?os=mac&package=jre&version=17" class="btn btn-outline-primary btn-sm" target="_blank">Download JRE</a>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">4</span>
+                            <strong>Remove JRE Folder</strong>
+                            <p>Extract the shell client archive, then remove the bundled JRE folder so it will use the system installed one:</p>
+                            <div class="command-block">
+                                unzip shell.zip<br>
+                                cd shell<br>
+                                rm -rf jre<br>
+                                <button class="copy-btn">Copy</button>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">5</span>
+                            <strong>Run the Shell Client</strong>
+                            <div class="command-block">
+                                . ./start-rep-shell
+                                <button class="copy-btn">Copy</button>
+                            </div>
+                        </div>
+                        
+                        <div class="note">
+                            <strong>Important:</strong> The JRE version must match the one bundled with the shell client (typically Java 17).
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Windows Setup -->
+            <div class="col-md-4">
+                <div class="platform-card card">
+                    <div class="card-header windows-header d-flex align-items-center">
+                        <i class="bi bi-windows platform-icon"></i>
+                        <span>Windows</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <strong>Install Windows Subsystem for Linux (WSL)</strong>
+                            <p>Open PowerShell as Administrator and run:</p>
+                            <div class="command-block">
+                                wsl --list --online
+                                <button class="copy-btn">Copy</button>
+                            </div>
+                            <p class="mt-2">This command lists the available Linux distributions ready to install.</p>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <strong>Install Ubuntu 24.04</strong>
+                            <p>If you want specifically Ubuntu 24.04, install it from the Microsoft Store or via PowerShell:</p>
+                            <div class="command-block">
+                                wsl --install -d Ubuntu-24.04
+                                <button class="copy-btn">Copy</button>
+                            </div>
+                            <p class="mt-2">Follow the prompts to set up your Ubuntu username and password.</p>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <strong>Download the Shell Client</strong>
+                            <p>Download the Shell Client from the Create module to your Windows machine.</p>
+                            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#downloadModal">Download Shell Client</a>
+                        </div>
+                        
+                        
+                        <div class="step">
+                            <span class="step-number">4</span>
+                            <strong>Extract the Shell Client</strong>
+                            <p>Extract the downloaded archive to your preferred location:</p>
+                            <div class="command-block">
+                                tar -xf shell.zip
+                                <button class="copy-btn">Copy</button>
+                            </div>                            
+                        </div>
+
+                        <div class="step">
+                            <span class="step-number">5</span>
+                            <strong>Copy to WSL Environment</strong>
+                            <p>Copy the downloaded file to your WSL Ubuntu home directory:</p>
+                            <div class="command-block">
+                                # From Windows PowerShell, UI <br/>
+                                # or Command Prompt<br/>
+                                wsl --cd ~ --exec cp -fr /mnt/c/Users/user/Downloads/shell
+                                                                
+                                <button class="copy-btn">Copy</button>
+                            </div>
+                            <p class="mt-2">Replace <code>/mnt/c/Users/user/Downloads//</code> with the actual path to your extracted folder file.</p>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">6</span>
+                            <strong>Extract and Run in WSL</strong>
+                            <p>Open your WSL Ubuntu terminal and run:</p>
+                            <div class="command-block">
+                                # Navigate to the directory<br>
+                                cd 
+                                # Extract the archive<br>
+                                unzip shell.zip<br>
+                                # Navigate to the directory<br>
+                                cd shell<br>
+                                # Run the shell client
+                                . ./start-rep-shell
+                                <button class="copy-btn">Copy</button>
+                            </div>
+                        </div>
+                        
+                        <div class="note">
+                            <strong>Tip:</strong> You can access your Windows files from WSL at <code>/mnt/c/</code> for C: drive, <code>/mnt/d/</code> for D: drive, etc.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Common Issues Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Common Issues & Troubleshooting</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="accordion" id="troubleshootingAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Permission Denied Error
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#troubleshootingAccordion">
+                                    <div class="accordion-body">
+                                        <p>If you encounter a "Permission denied" error when trying to run the shell client, make the script executable:</p>
+                                        <div class="command-block">
+                                            chmod +x start-rep-shell
+                                            <button class="copy-btn">Copy</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Java Version Mismatch
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#troubleshootingAccordion">
+                                    <div class="accordion-body">
+                                        <p>If you see errors related to Java version incompatibility, ensure you're using the correct JRE version (Java 17).</p>
+                                        <p>You can check the bundled JRE version with:</p>
+                                        <div class="command-block">
+                                            ./jre/bin/java -version
+                                            <button class="copy-btn">Copy</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Connection Issues
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#troubleshootingAccordion">
+                                    <div class="accordion-body">
+                                        <p>If you're having trouble connecting to the ioChem-BD server:</p>
+                                        <ul>
+                                            <li>Check your network connection</li>
+                                            <li>Verify the server URL is correct</li>
+                                            <li>Ensure your credentials are valid</li>
+                                            <li>Check if your firewall is blocking the connection</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>ioChem-BD Shell Client</h4>
+                    <p>A powerful command-line interface for interacting with the ioChem-BD platform.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>For more information, visit <a href="https://www.iochem-bd.org" class="text-white">www.iochem-bd.org</a></p>
+                    <p>Need help? <a href="mailto:support@iochem-bd.org" class="text-white">Contact Support</a></p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; 2023 ioChem-BD. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Add this modal at the end of the body tag -->
+    <div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="downloadModalLabel">Download Shell Client</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="card">
+                <img src="https://docs.iochem-bd.org/assets/WebUploadForm5.Dr-xB07U.png" class="card-img-top" alt="Shell Client Download" style="width: 200px;">
+                <div class="card-body">
+                <p class="card-text">Click on the top menu option of the Create module navigation bar</p>
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script>
+        // Copy to clipboard functionality
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const commandBlock = this.parentElement;
+                const textToCopy = commandBlock.innerText.replace('Copy', '').trim();
+                
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalText = this.innerText;
+                    this.innerText = 'Copied!';
+                    this.style.backgroundColor = 'rgba(46, 204, 113, 0.3)';
+                    
+                    setTimeout(() => {
+                        this.innerText = originalText;
+                        this.style.backgroundColor = 'rgba(255,255,255,0.2)';
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
