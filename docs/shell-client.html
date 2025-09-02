@@ -321,8 +321,6 @@
                             <p>Download the Shell Client from the Create module to your Windows machine.</p>
                             <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#downloadModal">Download Shell Client</a>
                         </div>
-                        
-                        
                         <div class="step">
                             <span class="step-number">4</span>
                             <strong>Extract the Shell Client</strong>
@@ -332,7 +330,6 @@
                                 <button class="copy-btn">Copy</button>
                             </div>                            
                         </div>
-
                         <div class="step">
                             <span class="step-number">5</span>
                             <strong>Copy to WSL Environment</strong>
@@ -340,22 +337,18 @@
                             <div class="command-block">
                                 # From Windows PowerShell, UI <br/>
                                 # or Command Prompt<br/>
-                                wsl --cd ~ --exec cp -fr /mnt/c/Users/user/Downloads/shell
-                                                                
+                                wsl --cd ~ --exec cp -fr /mnt/c/Users/user/Downloads/shell shell<br/>
                                 <button class="copy-btn">Copy</button>
                             </div>
-                            <p class="mt-2">Replace <code>/mnt/c/Users/user/Downloads//</code> with the actual path to your extracted folder file.</p>
+                            <p class="mt-2">Replace <code>/mnt/c/Users/user/Downloads</code> with the actual path to your extracted folder file.</p>
                         </div>
-                        
                         <div class="step">
                             <span class="step-number">6</span>
-                            <strong>Extract and Run in WSL</strong>
+                            <strong>Run in WSL</strong>
                             <p>Open your WSL Ubuntu terminal and run:</p>
                             <div class="command-block">
                                 # Navigate to the directory<br>
-                                cd 
-                                # Extract the archive<br>
-                                unzip shell.zip<br>
+                                cd <br>
                                 # Navigate to the directory<br>
                                 cd shell<br>
                                 # Run the shell client
@@ -363,7 +356,6 @@
                                 <button class="copy-btn">Copy</button>
                             </div>
                         </div>
-                        
                         <div class="note">
                             <strong>Tip:</strong> You can access your Windows files from WSL at <code>/mnt/c/</code> for C: drive, <code>/mnt/d/</code> for D: drive, etc.
                         </div>
